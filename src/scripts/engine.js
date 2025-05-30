@@ -5,6 +5,7 @@ const state = {
         enemy: document.querySelector(".enemy"),
         timeLeft: document.querySelector("#time-left"),
         score: document.querySelector("#score"),
+        life: document.querySelector("#life"),
     },
     values: {
         gameVelocity: 1000,
@@ -50,7 +51,14 @@ function countDown(){
     if(state.values.currentTime <= 0){
         clearInterval(state.actions.countDownTimerId);
         clearInterval(state.actions.timerId);
-        alert("O tempo acabou. Seu resultado foi" + state.values.result);
+        alert("O tempo acabou. Seu resultado foi " + state.values.result);
+        state.view.life.textContent = `x${state.view.life.textContent[1]-1}`;
+        
+        if (state.view.life.textContent[1] > 0){
+            state.values.currentTime = 60;
+            state.actions.countDownTimerId = setInterval(countDown, 1000);
+            state.actions.timerId = setInterval(randomSquare, 1000);
+        }   
     }
 }
 
